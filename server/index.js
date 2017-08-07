@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const ssllabs = require('node-ssllabs');
 
 //middleWare
 const bodyParser = require('body-parser');
