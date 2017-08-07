@@ -21,7 +21,7 @@ const tenonADATestRouter = require('./tenonADATest/tenonADATestRouter');
 const brokenLinkTestRouter = require('./brokenLinkTest/brokenLinkTestRouter');
 const googleTagDetectorRouter = require('./googleTagDetector/googleTagDetectorRouter');
 const wpVersionFinderRouter = require('./wpVersionFinder/wpVersionFinderRouter');
-
+const drupalVersionFinderRouter = require('./drupalVersionFinder/drupalVersionFinderRouter');
 
 app.use('/psi', pageSpeedAnalysisRouter);
 app.use('/ssl', ssllabsSiteSecurityTestRouter);
@@ -29,7 +29,7 @@ app.use('/ada', tenonADATestRouter);
 app.use('/links', brokenLinkTestRouter);
 app.use('/tags', googleTagDetectorRouter);
 app.use('/wpVersion', wpVersionFinderRouter);
-
+app.use('/drupalVersion', drupalVersionFinderRouter);
 
 app.get('/', (req, res) => {
   res.send("This is an API not an app, don't try and get me!");
