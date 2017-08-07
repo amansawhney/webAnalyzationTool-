@@ -13,7 +13,7 @@ exports.getPSI = (req, res) => {
     }).then(desktop => {
       console.log(req.body.url);
       console.log(desktop);
-      data.Speed = desktop.ruleGroups.SPEED.score;
+      data.desktopSpeed = desktop.ruleGroups.SPEED.score;
       res.send(data);
     });
   });

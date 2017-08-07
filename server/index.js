@@ -1,7 +1,5 @@
 const express = require('express');
 const app = express();
-const psi = require('psi');
-const keys = require('../keys');
 
 //middleWare
 const bodyParser = require('body-parser');
