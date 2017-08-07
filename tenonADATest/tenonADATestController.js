@@ -1,5 +1,5 @@
 const tenon = require('tenon-api-client');
-const keys = require('../../keys');
+const keys = require('../keys');
 const _ = require('lodash');
 
 exports.getADA = (req, res) => {
