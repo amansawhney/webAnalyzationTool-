@@ -1,6 +1,7 @@
-const nlc = require('node-linkchecker');
+const findlinks = require('findlinks');
+
 exports.getBrokenLinks = (req, res) => {
-    nlc.check(req.body.url).then(function(result) {
-        res.send(result);
-    });
-}
+  findlinks({ src: 'http://' + req.body.url })
+    .then(result => res.send(result))
+    .catch(err => next(err));
+};
