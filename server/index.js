@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-var tenon = require('tenon-api-client');
+const tenon = require('tenon-api-client');
 const keys = require('../keys');
 const _ = require('lodash');
 
@@ -12,25 +12,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //routers
 const pageSpeedAnalysisRouter = require('./pageSpeedAnalysis/pageSpeedAnalysisRouter');
 const ssllabsSiteSecurityTestRouter = require('./ssllabsSiteSecurityTest/ssllabsSiteSecurityTestRouter');
+const tenonADATestRouter = require('./tenonADATest/tenonADATestRouter');
 
 app.use('/psi', pageSpeedAnalysisRouter);
 app.use('/ssl', ssllabsSiteSecurityTestRouter);
-app.post('/tenon', (req, res) => {
-  tenon(
-    {
-      url: 'https://' + req.body.url, // required
-      key: keys.tenonAPIKEY, // required
-      // any additional options, see below
-    },
-    (err, response) => {
-      if (err) {
-        res.send('Oops: ' + err);
-      } else {
-
-        res.json(_.merge(response.resultSummary, response.request)); // or something useful
-      }
-    },
-  );
-});
+app.use('/tenon', tenonADATestRouter);
 
 app.listen(3000);
