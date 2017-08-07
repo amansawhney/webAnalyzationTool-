@@ -6,7 +6,7 @@ exports.getADA = (req, res) => {
   tenon(
     {
       url: 'https://' + req.body.url, // required
-      key: keys.tenonAPIKEY, // required
+      key: keys.tenonAPIKEY || process.env.tenonAPIKEY, // required
       // any additional options, see below
     },
     (err, response) => {
