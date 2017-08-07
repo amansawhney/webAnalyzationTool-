@@ -12,10 +12,13 @@ const ssllabsSiteSecurityTestRouter = require('./ssllabsSiteSecurityTest/ssllabs
 const tenonADATestRouter = require('./tenonADATest/tenonADATestRouter');
 const brokenLinkTestRouter = require('./brokenLinkTest/brokenLinkTestRouter');
 
-
 app.use('/psi', pageSpeedAnalysisRouter);
 app.use('/ssl', ssllabsSiteSecurityTestRouter);
 app.use('/ada', tenonADATestRouter);
 app.use('/links', brokenLinkTestRouter);
+
+app.get('/', (req, res) => {
+  res.send("This is an API not an app, don't try and get me!");
+});
 
 app.listen(3000);
