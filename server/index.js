@@ -1,8 +1,5 @@
 const express = require('express');
 const app = express();
-const tenon = require('tenon-api-client');
-const keys = require('../keys');
-const _ = require('lodash');
 
 //middleWare
 const bodyParser = require('body-parser');
@@ -16,6 +13,6 @@ const tenonADATestRouter = require('./tenonADATest/tenonADATestRouter');
 
 app.use('/psi', pageSpeedAnalysisRouter);
 app.use('/ssl', ssllabsSiteSecurityTestRouter);
-app.use('/tenon', tenonADATestRouter);
+app.use('/ada', tenonADATestRouter);
 
 app.listen(3000);
