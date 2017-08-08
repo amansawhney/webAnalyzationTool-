@@ -9,7 +9,9 @@ exports.getDropalVersion = (req, res, next) => {
       if (error) {
         next(error);
       } else {
-        res.send({ version: body.slice(8, 12) });
+        body.includes('drupal')
+          ? res.send({ version: body.slice(8, 12) })
+          : res.send({ version: false });
       }
     },
   );
