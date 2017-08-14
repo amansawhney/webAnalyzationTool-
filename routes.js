@@ -7,11 +7,11 @@ module.exports = app => {
     const wpVersionFinderRouter = require('./api/wpVersionFinder/wpVersionFinderRouter');
     const drupalVersionFinderRouter = require('./api/drupalVersionFinder/drupalVersionFinderRouter');
 
-    app.use('/psi', pageSpeedAnalysisRouter);
-    app.use('/ssl', ssllabsSiteSecurityTestRouter);
-    app.use('/ada', tenonADATestRouter);
-    app.use('/links', brokenLinkTestRouter);
-    app.use('/tags', googleTagDetectorRouter);
-    app.use('/wpVersion', wpVersionFinderRouter);
-    app.use('/drupalVersion', drupalVersionFinderRouter);
+    app.use('/api/psi', pageSpeedAnalysisRouter);
+    app.use('/api/ssl', ssllabsSiteSecurityTestRouter);
+    app.use('/api/ada', tenonADATestRouter);
+    app.use('/api/links', brokenLinkTestRouter);
+    app.use('/api/tags', googleTagDetectorRouter);
+    app.use('/api/wpVersion', wpVersionFinderRouter);
+    app.use('/api/drupalVersion', drupalVersionFinderRouter);
 }
