@@ -10,7 +10,10 @@ exports.getVersion = (req, res, next) => {
     },
     function(error, response, body) {
       console.log(body);
-      if (body.lastIndexOf('https://wordpress.org/?') < 0) {
+      if(!body) {
+          res.send({ version: 'false' });
+      }
+      else if (body.lastIndexOf('https://wordpress.org/?') < 0) {
         res.send({ version: 'false' });
       } else {
         res.json({
