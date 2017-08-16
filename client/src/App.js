@@ -15,6 +15,7 @@ class App extends Component {
   postAPI(e) {
     e.preventDefault();
     var self = this;
+    self.setState({data: {}});
     var routes = [
       'ada',
       'psi',
