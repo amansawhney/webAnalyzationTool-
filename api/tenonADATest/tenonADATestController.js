@@ -2,7 +2,7 @@ const tenon = require('tenon-api-client');
 const keys = require('../../keys');
 const _ = require('lodash');
 
-exports.getADA = (req, res) => {
+exports.getADA = (req, res, next) => {
   tenon(
     {
       url: 'https://' + req.body.url, // required
@@ -11,7 +11,7 @@ exports.getADA = (req, res) => {
     },
     (err, response) => {
       if (err) {
-        res.send('Oops: ' + err);
+          next(err);
       } else {
         res.json(_.merge(response.resultSummary, response.request)); // or something useful
       }
