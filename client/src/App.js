@@ -8,6 +8,7 @@ class App extends Component {
       url: '',
       data: {
         psi: {},
+        ada: {},
       },
     };
     this.handleUrlChange = this.handleUrlChange.bind(this);
@@ -27,6 +28,17 @@ class App extends Component {
       .catch(function(error) {
         console.log(error);
       });
+    axios
+      .post('/api/ada', {
+        url: self.state.url,
+      })
+      .then(function(response) {
+        console.log(response.data);
+        self.setState({ data: { ada: response.data } });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
   handleUrlChange(event) {
     this.setState({ url: event.target.value });
@@ -42,7 +54,7 @@ class App extends Component {
         />
         <button onClick={this.postAPI}>postAPI</button>
         <p>
-          {JSON.stringify(this.state.data.psi, null, 2)}
+          {JSON.stringify(this.state.data, null, 2)}
         </p>
       </div>
     );
