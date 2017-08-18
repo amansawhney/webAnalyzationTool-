@@ -1,5 +1,4 @@
 const request = require('request');
-const check = require('httpcheck');
 const cheerio = require('cheerio');
 
 exports.getVersion = (req, res, next) => {
