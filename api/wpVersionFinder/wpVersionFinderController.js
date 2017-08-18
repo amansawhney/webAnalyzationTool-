@@ -36,13 +36,16 @@ exports.getVersion = (req, res, next) => {
                 '#pagebody > div > div > table > tbody > tr:nth-child(1) > td > a',
               ).filter(function() {
                 var data = $(this);
-                latestVersion = data['0'].attribs.href
+                var versionString = data['0'].children[0].data;
+                latestVersion = versionString
                   .substring(
-                    data['0'].attribs.href.lastIndexOf('wordpress-') + 10,
-                    data['0'].attribs.href.lastIndexOf('wordpress-') + 15,
+                    versionString.indexOf('WordPress') + 10,
+                    versionString.indexOf('WordPress') + 15,
                   )
-                  .replace(/-/g, '.')
-                  .replace('/[A-Za-z]/g', '');
+                  .replace('/[^0-9]/g', '')
+                  .replace(' ', '')
+                  .replace('“', '')
+                  .replace('"', '');
                 res.json({
                   version: currentVersion,
                   latest: latestVersion,
