@@ -23,7 +23,7 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length > 100) {
+        if (data.sucessUrls.length > 200) {
           data.numberOfFailed = data.faliureUrls.length;
           data.numberOfSucess = data.sucessUrls.length;
           res.send(data);
