@@ -1,4 +1,3 @@
-const findlinks = require('findlinks');
 const blc = require('broken-link-checker');
 
 exports.getBrokenLinks = (req, res, next) => {
