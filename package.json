@@ -14,6 +14,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "body-parser": "^1.17.2",
+    "broken-link-checker": "^0.7.6",
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
     "findlinks": "^1.1.0",
@@ -25,6 +26,7 @@
     "osmosis": "^1.1.4",
     "path": "^0.12.7",
     "psi": "^3.0.0",
+    "ssl-root-cas": "^1.2.3",
     "tenon-api-client": "^0.1.7"
   },
   "engines": {
