@@ -17,6 +17,7 @@
     "cheerio": "^1.0.0-rc.2",
     "express": "^4.15.4",
     "findlinks": "^1.1.0",
+    "google-tag-manager-detection": "^1.0.0",
     "httpcheck": "^0.3.0",
     "lodash": "^4.17.4",
     "merge-json": "0.1.0-b.3",
