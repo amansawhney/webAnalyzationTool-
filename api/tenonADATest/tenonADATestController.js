@@ -11,9 +11,22 @@ exports.getADA = (req, res, next) => {
     },
     (err, response) => {
       if (err) {
-          next(err);
+        next(err);
       } else {
-        res.json(_.merge(response.resultSummary, response.request)); // or something useful
+        var arr = [];
+        console.log(response.resultSet);
+
+        for (var x in response.resultSet) {
+          response.resultSet[x] = {
+            errorTitle: response.resultSet[x].errorTitle,
+            errorDescription: response.resultSet[x].errorDescription,
+            priority: response.resultSet[x].priority,
+          };
+        }
+        res.json({
+          numberOfFailedTests: response.resultSummary.tests.failing,
+          errors: response.resultSet,
+        }); // or something useful
       }
     },
   );
