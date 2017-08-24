@@ -25,9 +25,23 @@ exports.getADA = (req, res, next) => {
         }
         res.json({
           numberOfFailedTests: response.resultSummary.tests.failing,
-          errors: response.resultSet,
+          errors: removeDuplicates(response.resultSet),
         }); // or something useful
       }
     },
   );
 };
+
+function removeDuplicates(arr) {
+  return arr.reduce(
+    function(p, c) {
+      var id = [c.errorTitle, c.errorDescription, c.priority].join('|');
+      if (p.temp.indexOf(id) === -1) {
+        p.out.push(c);
+        p.temp.push(id);
+      }
+      return p;
+    },
+    { temp: [], out: [] },
+  ).out;
+}
