@@ -20,6 +20,7 @@ exports.getADA = (req, res, next) => {
           response.resultSet[x] = {
             errorTitle: response.resultSet[x].errorTitle,
             errorDescription: response.resultSet[x].errorDescription,
+            errorSnippet: response.resultSet[x].errorSnippet,
             priority: response.resultSet[x].priority,
           };
         }
