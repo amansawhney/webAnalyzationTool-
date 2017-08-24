@@ -5,8 +5,11 @@ exports.getPSI = (req, res) => {
   psi(req.body.url, {
     strategy: 'mobile',
   }).then(mobile => {
+    var response = satnazireResponseFromPSI(mobile);
+
     data.mobile = {
       basic: mobile.ruleGroups,
+      errors: response.formattedResults.ruleResults,
     };
     psi(req.body.url, {
       strategy: 'desktop',
@@ -14,8 +17,8 @@ exports.getPSI = (req, res) => {
       var response = satnazireResponseFromPSI(desktop);
       data.desktop = {
         basic: desktop.ruleGroups,
+        errors: response.formattedResults.ruleResults,
       };
-      data.errors = response.formattedResults.ruleResults;
       res.send(data);
     });
   });
