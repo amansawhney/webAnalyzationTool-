@@ -7,7 +7,15 @@ class App extends Component {
     super(props);
     this.state = {
       url: '',
-      data: {},
+      data: {
+        ada: { failed: true },
+        psi: { failed: true },
+        links: { failed: true },
+        tags: { failed: true },
+        ssl: { failed: true },
+        wpVersion: { failed: true },
+        drupalVersion: { failed: true },
+      },
     };
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.postAPI = this.postAPI.bind(this);
@@ -15,7 +23,6 @@ class App extends Component {
   postAPI(e) {
     e.preventDefault();
     var self = this;
-    self.setState({data: {}});
     var routes = [
       'ada',
       'psi',
@@ -32,10 +39,9 @@ class App extends Component {
         })
         .then(function(response) {
           console.log(response.data);
+          var response = mergeJSON.merge(response.data, { failed: false });
           self.setState({
-            data: mergeJSON.merge(self.state.data, {
-              data: { [route]: response.data },
-            }),
+            data: mergeJSON.merge(self.state.data, { [route]: response }),
           });
         })
         .catch(function(error) {
@@ -58,7 +64,7 @@ class App extends Component {
         <button onClick={this.postAPI}>postAPI</button>
         <pre>
           <code>
-            {JSON.stringify(this.state.data, null, 2)}
+            {JSON.stringify(this.state, null, 2)}
           </code>
         </pre>
       </div>

@@ -30,8 +30,18 @@ exports.getBrokenLinks = (req, res, next) => {
           });
         }
       },
-      page: function(error, pageUrl, customData) {},
-      site: function(error, siteUrl, customData) {},
+      page: function(error, pageUrl, customData) {
+        if (error) {
+          console.log(error);
+          next(error);
+        }
+      },
+      site: function(error, siteUrl, customData) {
+        if (error) {
+            console.log(error);
+            next(error);
+        }
+      },
       end: function() {
         if (data.sucessUrls.length < 100) {
           data.numberOfFailed = data.faliureUrls.length;
@@ -44,6 +54,5 @@ exports.getBrokenLinks = (req, res, next) => {
       },
     },
   );
-  siteChecker.enqueue('http://' + req.body.url, {
-  });
+  siteChecker.enqueue('http://' + req.body.url, {});
 };
