@@ -16,13 +16,13 @@ exports.getBrokenLinks = (req, res, next) => {
       html: function(tree, robots, response, pageUrl, customData) {},
       junk: function(result, customData) {},
       link: function(result, customData) {
-        console.log(data.sucessUrls.length);
+        console.log(data.sucessUrls.length + data.faliureUrls.length);
         if (!result.broken) {
           data.sucessUrls.push(result.url.resolved);
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length + data.faliureUrls.length > 100) {
+        if (data.sucessUrls.length + data.faliureUrls.length === 100) {
             res.send({
                 numberOfFailed: data.numberOfFailed,
                 faliureUrls: data.faliureUrls,
