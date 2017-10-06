@@ -22,13 +22,6 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length > 200) {
-          data.numberOfFailed = data.faliureUrls.length;
-          res.send({
-            numberOfFailed: data.numberOfFailed,
-            faliureUrls: data.faliureUrls,
-          });
-        }
       },
       page: function(error, pageUrl, customData) {
         if (error) {
@@ -38,19 +31,17 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       site: function(error, siteUrl, customData) {
         if (error) {
-            console.log(error);
-            next(error);
+          console.log(error);
+          next(error);
         }
       },
       end: function() {
-        if (data.sucessUrls.length < 100) {
-          data.numberOfFailed = data.faliureUrls.length;
-          res.send({
-            numberOfFailed: data.numberOfFailed,
-            faliureUrls: data.faliureUrls,
-          });
-          console.log('done');
-        }
+        data.numberOfFailed = data.faliureUrls.length;
+        res.send({
+          numberOfFailed: data.numberOfFailed,
+          faliureUrls: data.faliureUrls,
+        });
+        console.log('done');
       },
     },
   );
