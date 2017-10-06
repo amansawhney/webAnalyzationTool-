@@ -22,12 +22,10 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length + data.faliureUrls.length === 200) {
-          res.send({
-            numberOfFailed: data.numberOfFailed,
-            faliureUrls: data.faliureUrls,
-          });
-        }
+        res.send({
+          numberOfFailed: data.numberOfFailed,
+          faliureUrls: data.faliureUrls,
+        });
       },
       page: function(error, pageUrl, customData) {
         if (error) {
@@ -43,12 +41,10 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       end: function() {
         data.numberOfFailed = data.faliureUrls.length;
-        if (data.sucessUrls.length + data.faliureUrls.length < 200) {
-          res.send({
-            numberOfFailed: data.numberOfFailed,
-            faliureUrls: data.faliureUrls,
-          });
-        }
+        res.send({
+          numberOfFailed: data.numberOfFailed,
+          faliureUrls: data.faliureUrls,
+        });
         console.log('done');
       },
     },
