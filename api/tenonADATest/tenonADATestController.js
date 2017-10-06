@@ -14,7 +14,7 @@ exports.getADA = (req, res, next) => {
         next(err);
       } else {
         var arr = [];
-        console.log(response.resultSet);
+        console.log("hi");
 
         for (var x in response.resultSet) {
           response.resultSet[x] = {
