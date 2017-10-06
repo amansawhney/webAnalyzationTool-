@@ -22,10 +22,6 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        res.send({
-          numberOfFailed: data.numberOfFailed,
-          faliureUrls: data.faliureUrls,
-        });
       },
       page: function(error, pageUrl, customData) {
         if (error) {
