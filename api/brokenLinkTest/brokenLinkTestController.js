@@ -8,28 +8,26 @@ exports.getBrokenLinks = (req, res, next) => {
   };
   var siteChecker = new blc.SiteChecker(
     {
-      'user-agent': 'node-spider',
-      rejectUnauthorized: false,
+      maxSocketsPerHost: 10,
+        excludedSchemes: ["data","geo","javascript","mailto","sms","tel", "pdf"],
+        excludedKeywords: ["pdf"]
     },
     {
       robots: function(robots, customData) {},
       html: function(tree, robots, response, pageUrl, customData) {},
       junk: function(result, customData) {},
       link: function(result, customData) {
-        console.log(data.sucessUrls.length + data.faliureUrls.length);
         if (!result.broken) {
           data.sucessUrls.push(result.url.resolved);
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length + data.faliureUrls.length == 100) {
+        if(data.sucessUrls.length + data.faliureUrls.length == 1000) {
             res.send({
                 numberOfFailed: data.numberOfFailed,
                 faliureUrls: data.faliureUrls,
             });
-            process.exit()
         }
-
       },
       page: function(error, pageUrl, customData) {
         if (error) {
@@ -45,12 +43,13 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       end: function() {
         data.numberOfFailed = data.faliureUrls.length;
-        if (data.sucessUrls.length + data.faliureUrls.length <= 100) {
-            res.send({
-                numberOfFailed: data.numberOfFailed,
-                faliureUrls: data.faliureUrls,
-            });
-        }
+          if(data.sucessUrls.length + data.faliureUrls.length < 1000) {
+              res.send({
+                  numberOfFailed: data.numberOfFailed,
+                  faliureUrls: data.faliureUrls,
+              });
+          }
+
         console.log('done');
       },
     },
