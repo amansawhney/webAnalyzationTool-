@@ -42,12 +42,32 @@ exports.getVersion = (req, res, next) => {
                 );
               });
               console.log(versions.indexOf(currentVersion));
-              res.json({
-                current: currentVersion,
-                latest: versions[versions.length - 1],
-                numberOfOutOfDate:
-                  versions.length - versions.indexOf(currentVersion) - 1,
-              });
+              var reasons = [];
+              request(
+                {
+                  url:
+                    'https://codex.wordpress.org/Version_' +
+                    versions[versions.length - 1],
+                  rejectUnauthorized: false,
+                },
+                function(error, response, body) {
+                  if (error) {
+                    next(error);
+                  }
+                  var $ = cheerio.load(body);
+                  $('#mw-content-text > ol').filter(function() {
+                    var data = $(this);
+                    reasons = data.text().split("\n").filter(function(entry) { return entry.trim() != ''; });
+                    res.json({
+                      current: currentVersion,
+                      latest: versions[versions.length - 1],
+                      numberOfOutOfDate:
+                        versions.length - versions.indexOf(currentVersion) - 1,
+                      reasons: reasons,
+                    });
+                  });
+                },
+              );
             }
           },
         );
