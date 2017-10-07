@@ -5,8 +5,10 @@ exports.getBrokenLinks = (req, res, next) => {
     sucessUrls: [],
     faliureUrls: [],
     numberOfFailed: 0,
+    finished: false,
   };
-  var siteChecker = new blc.SiteChecker(
+    setTimeout(endSearch, 5000);
+    var siteChecker = new blc.SiteChecker(
     {
       maxSocketsPerHost: 1000,
       excludedSchemes: [
@@ -30,8 +32,10 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if (data.sucessUrls.length + data.faliureUrls.length == 1000) {
+        console.log(data.finished);
+        if (data.finished) {
           sendData(data, res);
+            data.finished = false;
         }
       },
       page: function(error, pageUrl, customData) {
@@ -48,7 +52,7 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       end: function() {
         data.numberOfFailed = data.faliureUrls.length;
-        if (data.sucessUrls.length + data.faliureUrls.length < 1000) {
+        if (!data.finished) {
           sendData(data, res);
         }
 
@@ -57,6 +61,11 @@ exports.getBrokenLinks = (req, res, next) => {
     },
   );
   siteChecker.enqueue('http://' + req.body.url, {});
+    function endSearch() {
+        data.finished = true;
+    }
+    console.log("hi")
+
 };
 
 function sendData(data, res) {
@@ -66,3 +75,4 @@ function sendData(data, res) {
     numberChecked: data.sucessUrls.length + data.faliureUrls.length,
   });
 }
+
