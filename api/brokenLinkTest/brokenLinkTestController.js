@@ -7,7 +7,7 @@ exports.getBrokenLinks = (req, res, next) => {
     numberOfFailed: 0,
     finished: false,
   };
-    setTimeout(endSearch, 5000);
+    setTimeout(endSearch, 10000);
     var siteChecker = new blc.SiteChecker(
     {
       maxSocketsPerHost: 1000,
