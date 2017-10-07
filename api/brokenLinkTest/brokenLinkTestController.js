@@ -6,6 +6,7 @@ exports.getBrokenLinks = (req, res, next) => {
     faliureUrls: [],
     numberOfFailed: 0,
     finished: false,
+      sent: false,
   };
     setTimeout(endSearch, 15000);
     var siteChecker = new blc.SiteChecker(
@@ -35,6 +36,7 @@ exports.getBrokenLinks = (req, res, next) => {
         if (data.finished) {
           sendData(data, res);
             data.finished = false;
+            data.sent = true;
         }
       },
       page: function(error, pageUrl, customData) {
@@ -51,7 +53,7 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       end: function() {
         data.numberOfFailed = data.faliureUrls.length;
-        if (!data.finished) {
+        if (!data.finished && !data.sent ) {
           sendData(data, res);
         }
 
