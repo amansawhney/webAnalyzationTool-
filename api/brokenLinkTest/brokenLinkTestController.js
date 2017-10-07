@@ -8,9 +8,17 @@ exports.getBrokenLinks = (req, res, next) => {
   };
   var siteChecker = new blc.SiteChecker(
     {
-      maxSocketsPerHost: 10,
-        excludedSchemes: ["data","geo","javascript","mailto","sms","tel", "pdf"],
-        excludedKeywords: ["pdf"]
+      maxSocketsPerHost: 1000,
+      excludedSchemes: [
+        'data',
+        'geo',
+        'javascript',
+        'mailto',
+        'sms',
+        'tel',
+        'pdf',
+      ],
+      excludedKeywords: ['pdf'],
     },
     {
       robots: function(robots, customData) {},
@@ -22,11 +30,8 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        if(data.sucessUrls.length + data.faliureUrls.length == 1000) {
-            res.send({
-                numberOfFailed: data.numberOfFailed,
-                faliureUrls: data.faliureUrls,
-            });
+        if (data.sucessUrls.length + data.faliureUrls.length == 1000) {
+          sendData(data, res);
         }
       },
       page: function(error, pageUrl, customData) {
@@ -43,12 +48,9 @@ exports.getBrokenLinks = (req, res, next) => {
       },
       end: function() {
         data.numberOfFailed = data.faliureUrls.length;
-          if(data.sucessUrls.length + data.faliureUrls.length < 1000) {
-              res.send({
-                  numberOfFailed: data.numberOfFailed,
-                  faliureUrls: data.faliureUrls,
-              });
-          }
+        if (data.sucessUrls.length + data.faliureUrls.length < 1000) {
+          sendData(data, res);
+        }
 
         console.log('done');
       },
@@ -56,3 +58,11 @@ exports.getBrokenLinks = (req, res, next) => {
   );
   siteChecker.enqueue('http://' + req.body.url, {});
 };
+
+function sendData(data, res) {
+  res.send({
+    numberOfFailed: data.numberOfFailed,
+    faliureUrls: data.faliureUrls,
+    numberChecked: data.sucessUrls.length + data.faliureUrls.length,
+  });
+}
