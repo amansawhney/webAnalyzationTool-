@@ -46,7 +46,7 @@ exports.getVersion = (req, res, next) => {
                 current: currentVersion,
                 latest: versions[versions.length - 1],
                 numberOfOutOfDate:
-                  versions.length - versions.indexOf(currentVersion),
+                  versions.length - versions.indexOf(currentVersion) - 1,
               });
             }
           },
