@@ -32,7 +32,6 @@ exports.getBrokenLinks = (req, res, next) => {
         } else {
           data.faliureUrls.push(result.url.resolved);
         }
-        console.log(data.finished);
         if (data.finished) {
           sendData(data, res);
             data.finished = false;
@@ -64,7 +63,6 @@ exports.getBrokenLinks = (req, res, next) => {
     function endSearch() {
         data.finished = true;
     }
-    console.log("hi")
 
 };
 
