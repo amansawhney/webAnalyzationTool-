@@ -22,34 +22,31 @@ exports.getVersion = (req, res, next) => {
             body.lastIndexOf('https://wordpress.org/?') + 30,
           )
           .replace('</', '');
-        var latestVersion = 'hi';
+        var versions = [];
         request(
           {
-            url: 'https://wordpress.org/news/category/releases/',
+            url: 'https://codex.wordpress.org/WordPress_Versions',
             rejectUnauthorized: false,
           },
           function(error, response, body) {
             if (!error) {
               var $ = cheerio.load(body);
               $(
-                '#pagebody > div > div > table > tbody > tr:nth-child(1) > td > a',
+                '#mw-content-text > table > tbody > tr > td > b > a',
               ).filter(function() {
                 var data = $(this);
-                var versionString = data['0'].children[0].data;
-                latestVersion = versionString
-                  .substring(
-                    versionString.indexOf('WordPress') + 10,
-                    versionString.indexOf('WordPress') + 15,
-                  )
-                  .replace('/[^0-9]/g', '')
-                  .replace(' ', '')
-                  .replace('“', '')
-                  .replace('"', '');
-                res.json({
-                  version: currentVersion,
-                  latest: latestVersion,
-                  isOnLatestVersion: currentVersion == latestVersion,
-                });
+                versions.push(
+                  data['0'].attribs.title
+                    .replace('Version ', '')
+                    .replace(' (page does not exist)', ''),
+                );
+              });
+              console.log(versions.indexOf(currentVersion));
+              res.json({
+                current: currentVersion,
+                latest: versions[versions.length - 1],
+                numberOfOutOfDate:
+                  versions.length - versions.indexOf(currentVersion),
               });
             }
           },

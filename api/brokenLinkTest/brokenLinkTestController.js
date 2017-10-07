@@ -27,7 +27,9 @@ exports.getBrokenLinks = (req, res, next) => {
                 numberOfFailed: data.numberOfFailed,
                 faliureUrls: data.faliureUrls,
             });
+            process.exit()
         }
+
       },
       page: function(error, pageUrl, customData) {
         if (error) {
